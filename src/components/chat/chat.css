@@ -175,4 +175,19 @@
     flex: 1;
     border: none;
   }
+
+  .top {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .center {
+    padding: 10px;
+  }
+
+  .bottom {
+    flex-direction: column;
+    gap: 10px;
+  }
 }

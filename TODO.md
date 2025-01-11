@@ -75,22 +75,20 @@
 - [ ] Mobil uyumlu değil.
 - [ ] Görsel iyileştirmeler yapılmalı. UI  / UX tekrar gözden geçirmek
 
-
-
 ## 💡 Copilot Önerileri
 
 ### 🔐 Güvenlik İyileştirmeleri
 
 - [ ] `.env` dosyasındaki Firebase kimlik bilgilerinin güvenliği artırılmalı
-- [ ] `upload.js`'de dosya boyutu ve türü kontrolleri eklenmeli
+- [X] `upload.js`'de dosya boyutu ve türü kontrolleri eklenmeli
 - [ ] Kullanıcı oturumlarının süresi sınırlandırılmalı
 - [ ] Message sanitization eklenmeli (XSS koruması için)
 - [ ] Firestore kuralları optimize edilmeli
 
 ### 🎨 UI/UX Geliştirmeleri
 
-- [ ] Chat penceresinde typing indicator eklenmeli
-- [ ] `chatList.css`'de scroll davranışı iyileştirilmeli
+- [X] Chat penceresinde typing indicator eklenmeli
+- [X] `chatList.css`'de scroll davranışı iyileştirilmeli
 - [ ] Karanlık/Aydınlık tema desteği için CSS değişkenleri kullanılmalı
 - [ ] Responsive tasarım sorunları giderilmeli (özellikle mobil görünümde)
 - [ ] Image lazy loading implementasyonu

@@ -22,6 +22,8 @@ const Chat = () => {
     file: null,
     url: "",
   });
+  const [isTyping, setIsTyping] = useState(false);
+  const [typingUsers, setTypingUsers] = useState([]);
 
   const { currentUser } = useUserStore();
   const { chatId, user, isCurrentUserBlocked, isReceiverBlocked } =
@@ -38,6 +40,7 @@ const Chat = () => {
   useEffect(() => {
     const unSub = onSnapshot(doc(db, "chats", chatId), (res) => {
       setChat(res.data());
+      setTypingUsers(res.data().typingUsers || []);
     });
 
     return () => {
@@ -76,6 +79,7 @@ const Chat = () => {
           createdAt: new Date(),
           ...(imgUrl && { img: imgUrl }),
         }),
+        typingUsers: typingUsers.filter((user) => user !== currentUser.username),
       });
 
       const userIDs = [currentUser.id, user.id];
@@ -110,6 +114,24 @@ const Chat = () => {
       });
 
       setText("");
+    }
+  };
+
+  const handleKeyDown = () => {
+    if (!isTyping) {
+      setIsTyping(true);
+      updateDoc(doc(db, "chats", chatId), {
+        typingUsers: arrayUnion(currentUser.username),
+      });
+    }
+  };
+
+  const handleKeyUp = () => {
+    if (isTyping) {
+      setIsTyping(false);
+      updateDoc(doc(db, "chats", chatId), {
+        typingUsers: arrayRemove(currentUser.username),
+      });
     }
   };
 
@@ -152,6 +174,11 @@ const Chat = () => {
           </div>
         )}
         <div ref={endRef}></div>
+        {typingUsers.length > 0 && (
+          <div className="typing-indicator">
+            {typingUsers.join(", ")} is typing...
+          </div>
+        )}
       </div>
       <div className="bottom">
         <div className="icons">
@@ -176,6 +203,8 @@ const Chat = () => {
           }
           value={text}
           onChange={(e) => setText(e.target.value)}
+          onKeyDown={handleKeyDown}
+          onKeyUp={handleKeyUp}
           disabled={isCurrentUserBlocked || isReceiverBlocked}
         />
         <div className="emoji">
